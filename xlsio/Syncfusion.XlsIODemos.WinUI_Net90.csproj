@@ -475,7 +475,7 @@
 	</Page>
     </ItemGroup>
     <ItemGroup>
-    <PackageReference Include="Syncfusion.XlsIORenderer.NET" Version="30.2.7" />
+    <PackageReference Include="Syncfusion.XlsIORenderer.NET" Version="31.1.16" />
     </ItemGroup>
 
     <ItemGroup>

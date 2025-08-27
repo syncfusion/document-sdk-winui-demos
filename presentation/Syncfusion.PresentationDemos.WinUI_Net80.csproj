@@ -175,9 +175,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Syncfusion.PresentationRenderer.NET" Version="30.2.7" />
-    <PackageReference Include="Syncfusion.Pdf.Imaging.NET" Version="30.2.7" />	
-    <PackageReference Include="Syncfusion.MetafileRenderer.NET" Version="30.2.7" />	
+    <PackageReference Include="Syncfusion.PresentationRenderer.NET" Version="31.1.16" />
+    <PackageReference Include="Syncfusion.Pdf.Imaging.NET" Version="31.1.16" />	
+    <PackageReference Include="Syncfusion.MetafileRenderer.NET" Version="31.1.16" />	
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
   
