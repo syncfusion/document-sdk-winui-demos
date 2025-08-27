@@ -16,12 +16,12 @@ namespace Syncfusion.DemosCommon.WinUI
 
 #if DOCUMENT_SDK
         public static string ControlsGalleryText => "Document SDK for WinUI";
-        public static string UWPSamplesLink => "https://github.com/syncfusion/winui-demos";
+        public static string UWPSamplesLink => "https://github.com/syncfusion/document-sdk-winui-demos";
         public static string UwpApiDocsLink => "https://help.syncfusion.com/cr/document-processing";
         public static string UWPUserGuideLink => "https://help.syncfusion.com/document-processing/introduction";
         public static string DocsLink => "https://help.syncfusion.com/document-processing/introduction";
         public static string DocsDesc => "The user guide documents for the Syncfusion Document SDK for WinUI.";
-        public static string GitHubLink => "https://github.com/syncfusion/winui-demos";
+        public static string GitHubLink => "https://github.com/syncfusion/document-sdk-winui-demos";
         public static string GitHubDesc => "All showcase and basic feature samples for Syncfusion Document SDK for WinUI.";
         public static string FeatureLink => "https://www.syncfusion.com/document-sdk";
         public static string FeatureDesc => "Explore Syncfusion's Document SDK for WinUI: includes powerful PDF, Word, Excel and PowerPoint libraries.";
