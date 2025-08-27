@@ -108,12 +108,12 @@ You can also run individual demos for specific document formats:
 
 ## <a name="documentation"></a>Documentation
 
-* [Syncfusion Document Processing User Guide](https://help.syncfusion.com/file-formats/introduction)
-* [DocIO User Guide](https://help.syncfusion.com/file-formats/docio/overview)
-* [PDF User Guide](https://help.syncfusion.com/file-formats/pdf/overview)
-* [Presentation User Guide](https://help.syncfusion.com/file-formats/presentation/overview)
-* [XlsIO User Guide](https://help.syncfusion.com/file-formats/xlsio/overview)
-* [API Reference](https://help.syncfusion.com/cr/file-formats)
+* [Syncfusion Document Processing User Guide](https://help.syncfusion.com/document-processing/introduction)
+* [DocIO User Guide](https://help.syncfusion.com/document-processing/word/word-library/net/overview)
+* [PDF User Guide](https://help.syncfusion.com/document-processing/pdf/pdf-library/net/overview)
+* [Presentation User Guide](https://help.syncfusion.com/document-processing/powerpoint/powerpoint-library/net/overview)
+* [XlsIO User Guide](https://help.syncfusion.com/document-processing/excel/excel-library/net/overview)
+* [API Reference](https://help.syncfusion.com/cr/document-processing/Syncfusion.DocIO.html)
 
 ## <a name="license"></a>License
 
