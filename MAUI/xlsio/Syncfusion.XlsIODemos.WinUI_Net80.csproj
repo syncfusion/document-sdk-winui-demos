@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\syncfusion.common.desktop.props"/>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<AssemblyName>Syncfusion.XlsIODemos.WinUI</AssemblyName>
+		<RootNamespace>Syncfusion.XlsIODemos.WinUI</RootNamespace>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Package.appxmanifest"/>
+		<None Remove="Properties\Default.rd.xml"/>
+		<None Remove="syncfusion.xlsiodemos.winui_TemporaryKey.pfx"/>
+		<None Remove="Views\ImportCollectionObject.xaml"/>
+		<Page Remove="Views\ImportCollectionObject.xaml"/>
+		<Compile Remove="Views\ImportCollectionObject.xaml.cs"/>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\XlsIO\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Assets\Tiles\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Assets\XlsIO\Template_Marker_Images\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Assets\XlsIO\Fonts\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Assets\XlsIO\image\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<AppxManifest Include="Package.appxmanifest"/>
+		<Manifest Include="$(ApplicationManifest)"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Syncfusion.XlsIORenderer.NET" Version="33.1.44"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="../common/Syncfusion.DemosCommon.WinUI_lib_Net80.csproj"/>
+	</ItemGroup>
+	<Import Project="..\targets\MultiTargeting_Net80.targets"/>
+</Project>
