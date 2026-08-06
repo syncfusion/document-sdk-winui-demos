@@ -1,0 +1,19 @@
+//Instantiate the ExcelEngine.
+using (ExcelEngine excelEngine = new ExcelEngine())
+{
+  //Instantiate the excel application object and set DefaultVersion as Xlsx.
+  IApplication application = excelEngine.Excel;
+  application.DefaultVersion = ExcelVersion.Xlsx;
+
+  //Open the existing Excel document with data.
+  Stream input = GetExcelStream("ExcelToMarkdown.xlsx");
+  IWorkbook workbook = application.Workbooks.Open(input, ExcelOpenType.Automatic);
+
+  //Create an instance of MarkdownExportOptions and set the encoding to UTF8.
+  MarkdownExportOptions options = new MarkdownExportOptions();
+  options.Encoding = Encoding.UTF8;
+
+  //Saving the workbook as stream.
+  using(MemoryStream stream = new MemoryStream() )
+  workbook.SaveAsMarkdown(stream, options);
+}
