@@ -1,8 +1,0 @@
-﻿//Gets the input Presentation file.
-using Stream fileStream = GetInputStream("PPTXToMD.pptx");
-//Opens an existing Presentation file.
-using IPresentation presentation = Syncfusion.Presentation.Presentation.Open(fileStream);
-using MemoryStream ms = new();
-//Saves the Markdown to the memory stream.
-presentation.Save(ms, FormatType.Markdown);
-ms.Position = 0;
