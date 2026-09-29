@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+
+namespace Syncfusion.XlsIODemos.WinUI.Views
+{
+    internal class InputTemplate
+    {
+        public async void GetInputTeamplate(Stream input, string filename, string extension)
+        {
+            MemoryStream stream = new MemoryStream();
+            input.CopyTo(stream);
+            stream.Position = 0;
+
+            StorageFile stFile;
+            FileSavePicker savePicker = new FileSavePicker();
+            savePicker.DefaultFileExtension = extension;
+            savePicker.SuggestedFileName = filename;
+            savePicker.FileTypeChoices.Add("Excel Documents", new List<string>() { extension });
+
+            if (!Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                IntPtr windowHandle = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                WinRT.Interop.InitializeWithWindow.Initialize(savePicker, windowHandle);
+                stFile = await savePicker.PickSaveFileAsync();
+            }
+            else
+            {
+                StorageFolder local = Windows.Storage.ApplicationData.Current.LocalFolder;
+                stFile = await local.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+            }
+            
+            if (stFile != null)
+            {
+                using (IRandomAccessStream zipStream = await stFile.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    //Write compressed data from memory to file
+                    using (Stream outstream = zipStream.AsStreamForWrite())
+                    {
+                        byte[] buffer = stream.ToArray();
+                        outstream.Write(buffer, 0, buffer.Length);
+                        outstream.Flush();
+                    }
+                }
+                //Launch the saved Excel file
+                await Windows.System.Launcher.LaunchFileAsync(stFile);
+            }
+            input.Dispose();
+            stream.Dispose();
+        }
+    }
+}

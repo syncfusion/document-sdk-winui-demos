@@ -1,0 +1,15 @@
+﻿//Gets the input Markdown document.
+using Stream fileStream = GetWordStream("MarkdownToWord.md");
+//Creates a new Word document instance.
+using WordDocument document = new();
+//Opens an existing Markdown document.
+document.Open(fileStream, FormatType.Markdown);
+//Creates a new DocIORenderer instance.
+using DocIORenderer renderer = new();
+//Converts Word document into PDF.
+using PdfDocument pdfDoc = renderer.ConvertToPDF(document);
+using MemoryStream ms = new();
+//Saves the PDF document to the memory stream.
+pdfDoc.Save(ms);
+PdfDocument.ClearFontCache();
+ms.Position = 0;

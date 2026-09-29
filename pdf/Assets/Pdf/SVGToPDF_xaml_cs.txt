@@ -1,0 +1,27 @@
+//Load SVG file to stream
+Stream documentStream = GetPdfStream("Input.svg");
+
+//Convert the SVG file to PDF template.
+SvgConverter converter = new SvgConverter();
+PdfTemplate temp = converter.Convert(documentStream);
+
+//Create a new PDF document and draw the PDF template to the page.
+PdfDocument document = new PdfDocument();
+document.PageSettings.Margins.All = 0;
+document.PageSettings.Size = new SizeF(temp.Width, temp.Height);
+PdfPage page = document.Pages.Add();
+
+//Draw the PDF template to the page.
+page.Graphics.DrawPdfTemplate(temp, new PointF(0, 0), new SizeF(temp.Width, temp.Height));
+            
+//Creating the stream object.
+using (MemoryStream stream = new MemoryStream())
+{
+    //Save the document into stream.
+    document.Save(stream);
+    //Close the PDF document
+    document.Close(true);
+    stream.Position = 0;
+    //Save the output stream as a file using file picker.
+    PdfUtil.Save("SVGToPDF.pdf", stream);
+}

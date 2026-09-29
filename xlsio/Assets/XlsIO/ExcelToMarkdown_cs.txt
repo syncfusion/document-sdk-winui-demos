@@ -1,0 +1,21 @@
+//Instantiate the ExcelEngine.
+using (ExcelEngine excelEngine = new ExcelEngine())
+{
+  //Instantiate the excel application object and set DefaultVersion as Xlsx.
+  IApplication application = excelEngine.Excel;
+  application.DefaultVersion = ExcelVersion.Xlsx;
+
+  //Open the existing Excel document with data.
+  Stream input = GetExcelStream("ExcelToMarkdown.xlsx");
+  IWorkbook workbook = application.Workbooks.Open(input, ExcelOpenType.Automatic);
+
+  // Initialize XlsIORenderer to preserve drawing elements such as charts and shapes.
+  application.XlsIORenderer = new XlsIORenderer.XlsIORenderer();
+  MarkdownExportOptions exportOptions = new MarkdownExportOptions();
+  exportOptions.PreserveEmptyRow = true;
+  exportOptions.UseDisplayText = true;
+
+  //Saving the workbook as stream.
+  using(MemoryStream stream = new MemoryStream() )
+  workbook.SaveAsMarkdown(stream, exportOptions);
+}
