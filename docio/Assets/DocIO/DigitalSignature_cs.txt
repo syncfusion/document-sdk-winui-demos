@@ -1,0 +1,96 @@
+//Creates a new Word document.
+using WordDocument document = new();
+AddContentToDocument(document);
+//Loads the .pfx certificate with its password.
+OfficeDigitalSignatureCertificate certificate = new("Certificate.pfx", "password123");
+if (invisible.IsChecked == true)
+    SignInvisibleDocument(document, certificate);
+else
+{
+    AddSignatureLine(document);
+    SignVisibleDocument(document, certificate);
+}
+using MemoryStream ms = new();
+//Saves the Word document to the memory stream.
+document.Save(ms, FormatType.Docx);
+
+private void AddContentToDocument(WordDocument document)
+{
+    IWSection section = document.AddSection();
+    WTextBody body = section.Body;
+    IWTextRange textRange = body.AddParagraph().AppendText("INVOICE");
+    textRange.CharacterFormat.Bold = true;
+    textRange.CharacterFormat.FontSize = 24;
+    body.AddParagraph();
+    body.AddParagraph().AppendText("This invoice has been generated for the goods and services provided as per our agreement.\r\nWe value your business and look forward to serving you again in the future.");
+    body.AddParagraph();
+}
+
+private void SignInvisibleDocument(WordDocument document, OfficeDigitalSignatureCertificate certificate)
+{
+    SignatureSettings settings = new SignatureSettings
+    {
+        Comments = "Approved",
+        //Sets the signature standard: XmlDsigLevel.XmlDSig or XmlDsigLevel.XAdEsEpes.
+        XmlDsigLevel = xades.IsChecked == true ? XmlDsigLevel.XAdEsEpes : XmlDsigLevel.XmlDSig
+    };
+    //Adds the digital signature to the document.
+    document.AddDigitalSignature(certificate, settings);
+}
+
+private void SignVisibleDocument(WordDocument document, OfficeDigitalSignatureCertificate certificate)
+{
+    //Gets the signature image.
+    byte[] signatureImage = File.ReadAllBytes("Signature.png");
+    WPicture picture = GetSignatureLinePicture(document);
+    if (picture == null)
+        throw new Exception("Signature line not found.");
+    SignatureSettings settings = new SignatureSettings
+    {
+        SignatureLineId = picture.SignatureLine.Id,
+        SignTime = DateTime.Now,
+        SignatureLineImage = signatureImage,
+        Comments = "Approved",
+        XmlDsigLevel = xades.IsChecked == true ? XmlDsigLevel.XAdEsEpes : XmlDsigLevel.XmlDSig
+    };
+    //Adds the digital signature to the document.
+    document.AddDigitalSignature(certificate, settings);
+}
+
+private void AddSignatureLine(WordDocument document)
+{
+    SignatureLineSettings settings = new SignatureLineSettings
+    {
+        Signer = "John Doe",
+        SignerTitle = "Manager",
+        Email = "john.doe@company.com",
+        ShowDate = true
+    };
+    document.LastSection
+            .AddParagraph()
+            .AppendSignatureLine(settings, 192, 96);
+}
+
+private WPicture GetSignatureLinePicture(WordDocument document)
+{
+    WPicture picture = null;
+    foreach (WSection section in document.Sections)
+    {
+        foreach (WParagraph paragraph in section.Paragraphs)
+        {
+            foreach (Entity entity in paragraph.ChildEntities)
+            {
+                if (entity is WPicture currentPicture && currentPicture.IsSignatureLine)
+                {
+                    picture = currentPicture;
+                    break;
+                }
+            }
+            if (picture != null)
+                break;
+        }
+        if (picture != null)
+            break;
+    }
+    return picture;
+}

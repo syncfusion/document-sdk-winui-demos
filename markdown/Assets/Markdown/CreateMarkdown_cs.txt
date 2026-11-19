@@ -1,0 +1,27 @@
+﻿MarkdownDocument doc = new MarkdownDocument();
+// Add text
+MdParagraph para = doc.AddParagraph();
+para.AddTextRange().Text = "This is a simple Markdown document.";
+// Add image
+MdParagraph imgPara = doc.AddParagraph();
+MdPicture image = new MdPicture();
+imgPara.Inlines.Add(image);
+image.Url = "https://cdn.syncfusion.com/content/images/company-logos/Syncfusion_Logo_Image.png";
+image.AltText = "Sample Image";
+// Add table
+MdTable table = doc.AddTable();
+MdTableRow header = table.AddTableRow();
+header.AddTableCell().Items.Add(new MdTextRange { Text = "Column 1" });
+header.AddTableCell().Items.Add(new MdTextRange { Text = "Column 2" });
+MdTableRow row = table.AddTableRow();
+row.AddTableCell().Items.Add(new MdTextRange { Text = "Value 1" });
+row.AddTableCell().Items.Add(new MdTextRange { Text = "Value 2" });
+// Add hyperlink
+MdParagraph linkPara = doc.AddParagraph();
+MdHyperlink link = linkPara.AddHyperlink();
+link.DisplayText = "Visit Syncfusion";
+link.Url = "https://www.syncfusion.com";
+// Get Markdown text
+string mdText = doc.GetMarkdownText();
+byte[] bytes = Encoding.UTF8.GetBytes(mdText);
+using MemoryStream ms = new(bytes);

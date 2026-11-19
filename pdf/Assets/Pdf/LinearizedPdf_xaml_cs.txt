@@ -1,0 +1,20 @@
+
+//Load XPS file to stream
+Stream documentStream = GetPdfStream("pdf_succinctly.pdf");
+// Load the PDF document
+PdfLoadedDocument document = new PdfLoadedDocument(documentStream);
+
+// Enable linearization for web optimization
+document.FileStructure.IsLinearized = true;
+
+//Creating the stream object.
+using (MemoryStream stream = new MemoryStream())
+{
+    //Save the linearized document into stream.
+    document.Save(stream);
+    //Close the PDF document
+    document.Close(true);
+    stream.Position = 0;
+    //Save the output stream as a file using file picker.
+    PdfUtil.Save("LinearizedPDF.pdf", stream);
+}
