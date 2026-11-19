@@ -1,0 +1,24 @@
+//Instantiate the ExcelEngine.
+using (ExcelEngine excelEngine = new ExcelEngine())
+{
+  //Instantiate the excel application object and set DefaultVersion as Xlsx.
+  IApplication application = excelEngine.Excel;
+  application.DefaultVersion = ExcelVersion.Xlsx;
+
+  //Set PreserveCSVDataTypes property to true to preserve the data types of the cells while saving as markdown.
+  application.PreserveCSVDataTypes = true;
+
+  //Open the existing Excel document with data.
+  Stream input = GetExcelStream("MarkdownToExcel.md");
+  IWorkbook workbook = application.Workbooks.Open(input, ExcelOpenType.Markdown);
+  IWorksheet sheet = workbook.Worksheets[0];
+ 
+  //Autofit the columns and calculate the formulas in the worksheet.
+  sheet.UsedRange.AutofitColumns();
+  sheet.Calculate();
+  workbook.Version = ExcelVersion.Xlsx;
+
+  //Saving the workbook as stream.
+  using(MemoryStream stream = new MemoryStream() )
+  workbook.SaveAsMarkdown(stream);
+}
